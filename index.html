@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,13 +22,22 @@
 body{font-family:var(--f);background:var(--tk-bg);color:var(--tk-ink);min-height:100vh;-webkit-font-smoothing:antialiased}
 
 @media print{
+  @page{margin:14mm 12mm}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
   .no-print{display:none!important}
   body{background:#fff}
   .dk{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .hero-dark{background:#1a1a2e!important}
   .radar-bg{background:#1a1a2e!important}
   .cta-dark{background:#1a1a2e!important}
-  .hdr{position:relative}
+  .hdr{position:static!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
+  .prog-wrap{display:none!important}
+  .wrap{max-width:100%}
+  .hero-dark,.radar-bg,.cta-dark,.rank-row,.ftr{break-inside:avoid;page-break-inside:avoid}
+  .sec-lbl{break-after:avoid;page-break-after:avoid}
+  .res-name{color:#fff!important}
+  .rank-name,.rank-pill{color-adjust:exact}
+  svg text{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
 .wrap{max-width:720px;margin:0 auto;padding:0 22px}
@@ -543,8 +553,6 @@ function App(){
 
   const cur=QUESTIONS[q];
   const curVal=ans[cur?.id];
-  const subj=encodeURIComponent("Anclas de Carrera — "+name);
-  const body=encodeURIComponent("Hola Esteban,\n\nAcabo de completar el diagnóstico de Anclas de Carrera.\nTe adjunto el PDF con mis resultados.\n\nNombre: "+name+"\n\nQuedo a la espera de tu análisis.\n\nSaludos");
 
   return(
     <div>
@@ -672,17 +680,13 @@ function App(){
             </div>
             <div className="cta-dark dk">
               <h3 className="cta-h">¿Qué significan tus resultados?</h3>
-              <p className="cta-p">Descargá este PDF y enviáselo por mail para recibir tu análisis personalizado.</p>
+              <p className="cta-p">Descargá este PDF y enviálo por mail a <strong style={{color:"#fff"}}>esteban@tenkai.com.ar</strong> para recibir tu análisis personalizado.</p>
               <div className="cta-acts">
                 <button className="btn no-print" onClick={()=>window.print()}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
                   Descargar PDF
                 </button>
-                <a className="btn-mail no-print" href={"mailto:esteban@tenkai.com.ar?subject="+subj+"&body="+body}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                  Enviar a esteban@tenkai.com.ar
-                </a>
-                <p className="cta-hint">También podés adjuntar el PDF manualmente</p>
+                <p className="cta-hint">Al descargar, elegí "Guardar como PDF" para conservar los colores y el detalle completo</p>
               </div>
             </div>
             <div className="ftr">
